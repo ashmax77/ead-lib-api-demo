@@ -44,6 +44,49 @@ Example request body:
 - MySQL
 - Maven
 
+## Running with Docker Compose
+
+Docker Compose runs the API and MySQL database together. The API connects to
+the database using the Compose service name `db`, while the database remains
+available from the host on port `3307`.
+
+1. Copy the environment template and set the database root password:
+
+   ```powershell
+   Copy-Item .env.example .env
+   ```
+
+   The default local `.env` value is `root123`. Do not commit `.env`; it is
+   excluded by `.gitignore`.
+2. Build and start both services:
+
+   ```powershell
+   docker compose up --build -d
+   ```
+3. Check service status and API logs:
+
+   ```powershell
+   docker compose ps
+   docker compose logs api
+   ```
+
+The API is available at `http://localhost:8080`. The books endpoint is
+`http://localhost:8080/api/books`, and Swagger UI is available at
+`http://localhost:8080/swagger-ui.html`.
+
+To stop and recreate the containers while preserving database records:
+
+```powershell
+docker compose down
+docker compose up -d
+```
+
+The named `library-data` volume preserves MySQL data. To remove the volume
+and all stored records, run `docker compose down -v`.
+
+For MySQL Workbench or another host client, connect to `localhost:3307` with
+username `root`, database `library_db`, and the password from `.env`.
+
 ## Running Locally
 
 1. Create a MySQL database named `library`.
