@@ -56,8 +56,6 @@ available from the host on port `3307`.
    Copy-Item .env.example .env
    ```
 
-   The default local `.env` value is `root123`. Do not commit `.env`; it is
-   excluded by `.gitignore`.
 2. Build and start both services:
 
    ```powershell
